@@ -27,7 +27,8 @@ exports.getAllCards = async (req, res) => {
 };
 exports.getAllCategory = async (req, res) => {
 
- console.log(req);
+ console.log(req.body);
+ console.log(req.body.inputObjs);
  if(JSON.parse(req.body.inputObjs)[0]){
   console.log(JSON.parse(req.body.inputObjs)[0]);
    const sendData =JSON.parse(req.body.inputObjs)[0];
