@@ -8,8 +8,8 @@ const path = require('path');
 
   const CLIENT_ID = "559968047699-o0nqrre40smfuvqe2056kk4331al2a9k.apps.googleusercontent.com";
 const CLIENT_SECRET = "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";
-const REDIRECT_URI = "http://localhost:4200/home"
-
+//const REDIRECT_URI = "http://localhost:4200/home"
+const REDIRECT_URI = "https://ccrewardstech12.netlify.app/home"
 //const oAuth2Client = new google.auth.OAuth2(CLIENT_ID, CLIENT_SECRET, REDIRECT_URL)
 var authed = false;
 
