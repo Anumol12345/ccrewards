@@ -38,14 +38,12 @@ const CardsSchema = new mongoose.Schema({
 
 const UserSchema = new mongoose.Schema({
   userName: { type: String, required: true },
-  limit: { type: String },   // encrypted string
+  limit: { type: String },   
   email: { type: String, required: true }, 
-  emailHash: { type: String, required: true, unique: true }, // encrypted string
+  emailHash: { type: String, required: true, unique: true }, 
   cards: { type: String } 
 });
 
-
-//UserSchema.index({ emailHash: 1 }, { unique: true });
 
 const UserCards = mongoose.model('UserCards', UserSchema, 'UserCards');
 const CardList = mongoose.model('CardList', cardSchema, 'CardList');

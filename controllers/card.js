@@ -3,9 +3,6 @@ const { CardList, CreditCard,Cards, UserCards} = require('../model/card');
 const tokenData = require('./token');
 
 const crypto = require('crypto');
-
-// AES-256 key must be 32 bytes:
-//const ENCRYPTION_KEY = crypto.randomBytes(32);
 const ENCRYPTION_KEY = Buffer.from('01234567890123456789012345678901'); // replace with your secure key
 const ALGORITHM = 'aes-256-gcm';
 
@@ -14,7 +11,7 @@ const ALGORITHM = 'aes-256-gcm';
 compareCards =[];
 bankNames = [];
 
-// Get all cards
+
 exports.getAllCards = async (req, res) => {
   try {
   
@@ -28,14 +25,11 @@ exports.getAllCards = async (req, res) => {
 exports.getAllCategory = async (req, res) => {
 
  if(JSON.parse(req.body.inputObjs)[0]){
-  console.log(JSON.parse(req.body.inputObjs)[0]);
    const sendData =JSON.parse(req.body.inputObjs)[0];
   let typeId  = sendData.typeId;
   try {
   
     const cards = await CreditCard.find({ typeId: typeId });
-   
-   
     res.status(200).json(cards);
   } catch (error) {
     res.status(500).json({ error: error.message });
@@ -168,7 +162,6 @@ exports.getCompare = async (req, res) => {
 
  if(JSON.parse(req.body.inputObjs)[0]){
   
-  
    let compare = JSON.parse(req.body.inputObjs)[0];
     const cardsData = await Cards.find({ cardId: { $in: compare } });
    res.status(200).json(cardsData);
@@ -176,14 +169,6 @@ exports.getCompare = async (req, res) => {
 
 };
 
-// exports.getCompareCards = async (req, res) => {
-
-//   res.status(200).json(this.compareCards);
-
-// };
-
-
-////after login
 exports.getBanks = async (req, res) => {
   try {
  
@@ -194,7 +179,6 @@ exports.getBanks = async (req, res) => {
 	  }
 
     const decoded = tokenData.verifyToken(token);
-    console.log(decoded);
 
     const email = decoded.email;
     if (!email) {
@@ -225,14 +209,12 @@ exports.getCardsByBankId = async (req, res) => {
 	  }
 
     const decoded = tokenData.verifyToken(token);
-    console.log(decoded);
 
     const email = decoded.email;
     if (!email) {
       return res.status(400).json({ message: "Invalid token" });
     }
     const id = Number(req.params.id);
-   console.log(this.bankNames);
    
    const bank = this.bankNames.find(b => b.id === id);
 
@@ -242,8 +224,6 @@ exports.getCardsByBankId = async (req, res) => {
 
     const cards = await Cards.find({ bankName: bank.bankName });
 
-    
-
     res.status(200).json(cards);
 
   } catch (err) {
@@ -251,8 +231,6 @@ exports.getCardsByBankId = async (req, res) => {
     res.status(500).json({ message: 'Server error' });
   }
 };
-
-
 
 exports.saveProfile = async (req, res) => {
   try {
@@ -262,7 +240,6 @@ exports.saveProfile = async (req, res) => {
 	  }
 
     const decoded = tokenData.verifyToken(token);
-    console.log(decoded);
 
     if (!decoded.email) {
       return res.status(400).json({ message: "Invalid token" });
@@ -275,8 +252,6 @@ exports.saveProfile = async (req, res) => {
     if (!email) {
       return res.status(400).json({ message: 'Email is required' });
     }
-console.log(cards);
-
  const encryptedUserName = encrypt(userName);
 const encryptedEmail = encrypt(email);
 
@@ -290,11 +265,9 @@ if(cards.length > 0){
 encryptedCards = encrypt(JSON.stringify(cards));
 }
 
-console.log(encryptedCards);
 
  const emailHash = hashEmail(email);
  const existingUser = await UserCards.findOne({ emailHash });
-//const existingUser = await UserCards.findOne({ email: encryptedEmail });
 
 let savedUser;
 
@@ -313,11 +286,7 @@ if (existingUser) {
   });
   savedUser = await newUser.save();
     }
-   console.log(savedUser);
-   
-   if(savedUser.limit){
-
-   }
+  
 
     const decryptedUser = {
   userName: decrypt(savedUser.userName),
@@ -346,7 +315,6 @@ exports.getProfile = async (req, res) => {
 	  }
 
     const decoded = tokenData.verifyToken(token);
-    console.log(decoded);
 
     if (!decoded.email) {
       return res.status(400).json({ message: "Invalid token" });
@@ -362,7 +330,6 @@ exports.getProfile = async (req, res) => {
     
 
    if (!user) {
-      // ✅ Return empty array if no user found
       return res.status(200).json([]);
     }
 
@@ -389,7 +356,7 @@ function hashEmail(email) {
 }
 
 function encrypt(text) {
-  const iv = crypto.randomBytes(16); // initialization vector
+  const iv = crypto.randomBytes(16); 
   const cipher = crypto.createCipheriv(ALGORITHM, ENCRYPTION_KEY, iv);
 
   let encrypted = cipher.update(text, 'utf8', 'hex');
@@ -397,7 +364,6 @@ function encrypt(text) {
 
   const authTag = cipher.getAuthTag();
   return `${iv.toString('hex')}:${authTag.toString('hex')}:${encrypted}`;
-  //return iv.toString('hex') + ':' + authTag.toString('hex') + ':' + encrypted;
 }
 
 function decrypt(encryptedText) {

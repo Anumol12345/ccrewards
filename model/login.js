@@ -6,7 +6,7 @@ const userSchema = new mongoose.Schema({
   picture: String,
 }, { timestamps: true });
 
-// 🔹 Session Schema
+
 const sessionSchema = new mongoose.Schema({
   sessionId: { type: String, required: true, unique: true },
   userId: { type: String, required: true, unique: true },
@@ -14,7 +14,7 @@ const sessionSchema = new mongoose.Schema({
   expiresAt: { type: Date }
 });
 
-// 🔹 Export both
+
 const User = mongoose.model('User', userSchema);
 const Session = mongoose.model('Session', sessionSchema);
 

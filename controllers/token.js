@@ -18,7 +18,6 @@ module.exports.verifyToken= function (token) {
    
 };
 exports.renewToken =  async(req,res,next)=>{
-    console.log(req.body.userid);
     const email =req.body.userid
     const refreshtoken= jwt.sign({ email }, jwtKey, {
         		algorithm: "HS256",

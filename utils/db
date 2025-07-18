@@ -2,14 +2,9 @@ const mongoose = require('mongoose');
 
 const connectDB = async () => {
   try {
-    // await mongoose.connect('mongodb://localhost:27017/CCRewards', {
-    //   useNewUrlParser: true,
-    //   useUnifiedTopology: true
-    // });
+    
+   await mongoose.connect('mongodb+srv://ccrewardsternary:CCRewards%40ternary@ccrewards.x0jlhyx.mongodb.net/CCRewards', {
 
-   await mongoose.connect('mongodb+srv://anumolkantony2016:A%402809db.com@ccrewards.slr4ro9.mongodb.net/CCRewards', {
- // useNewUrlParser: true,
-  //useUnifiedTopology: true
 });
     console.log('MongoDB connected!');
   } catch (error) {
