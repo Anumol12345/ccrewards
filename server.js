@@ -1,6 +1,6 @@
 const express = require('express');
 const bodyParser = require("body-parser");
-const importDB = require('./import-db');
+
 const cors = require('cors');
 const path = require('path');
 const connectDB = require('./utils/db');
@@ -20,7 +20,7 @@ app.use('/api/cards', cardRoutes);
 
 // Connect DB and start server
 connectDB().then(() => {
- // importDB();
+
  app.listen(PORT, '0.0.0.0', () => {
   console.log(`Server is running on port ${PORT}`);
 });
