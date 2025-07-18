@@ -298,8 +298,16 @@ async function downloadAndSaveGoogleImage(googleImageUrl,email){
   const safeName = email.split('@')[0]; 
   const fileName = `${safeName}-acc.png`;
 
-  const filePath = path.join(__dirname, '../public/uploads', fileName);
+ const uploadDir = path.join(__dirname, '../public/uploads');
+
+  // ✅ Create directory if it doesn't exist
+  if (!fs.existsSync(uploadDir)) {
+    fs.mkdirSync(uploadDir, { recursive: true });
+  }
+
+  const filePath = path.join(uploadDir, fileName);
   fs.writeFileSync(filePath, buffer);
+
 
   return `https://ccrewards-1.onrender.com/uploads/${fileName}`;
 
