@@ -301,5 +301,6 @@ async function downloadAndSaveGoogleImage(googleImageUrl,email){
   const filePath = path.join(__dirname, '../public/uploads', fileName);
   fs.writeFileSync(filePath, buffer);
 
-  return `http://localhost:3000/uploads/${fileName}`;
+  return `https://ccrewards-1.onrender.com/uploads/${fileName}`;
+
 }
